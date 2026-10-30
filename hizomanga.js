@@ -1,45 +1,30 @@
-const HizoMangaNovels = {
-  id: "hizomanga-novels",
-  name: "Hizo Manga (Novels)",
-  icon: "https://hizomanga.net/favicon.ico",
-  baseUrl: "https://hizomanga.net",
-  version: "1.0.0",
-  site: "https://hizomanga.net",
-  
-  // دالة البحث عن الروايات
-  searchNovels: async function(searchTerm) {
-    const url = `${this.baseUrl}/?s=${encodeURIComponent(searchTerm)}&post_type=wp-manga`;
-    const result = await fetch(url);
-    const body = await result.text();
-    
-    let novels = [];
-    // سيتم هنا جلب عناصر الروايات لاحقاً
-    return novels;
-  },
+class HizoManga {
+    constructor() {
+        this.id = 'hizomanga-novels';
+        this.name = 'Hizo Manga (Novels)';
+        this.icon = 'https://hizomanga.net/favicon.ico';
+        this.baseUrl = 'https://hizomanga.net';
+    }
 
-  // دالة جلب تفاصيل الرواية والفصول
-  parseNovel: async function(novelUrl) {
-    const result = await fetch(novelUrl);
-    const body = await result.text();
-    
-    let novel = {
-      url: novelUrl,
-      name: "",
-      cover: "",
-      summary: "",
-      author: "",
-      status: "",
-      chapters: []
-    };
-    return novel;
-  },
+    async searchNovels(searchTerm) {
+        const res = await fetch(`${this.baseUrl}/?s=${encodeURIComponent(searchTerm)}&post_type=wp-manga`);
+        const html = await res.text();
+        return [];
+    }
 
-  // دالة جلب محتوى الفصل
-  parseChapter: async function(chapterUrl) {
-    const result = await fetch(chapterUrl);
-    const body = await result.text();
-    
-    let chapterText = "";
-    return chapterText;
-  }
-};
+    async parseNovel(novelUrl) {
+        return {
+            url: novelUrl,
+            name: '',
+            cover: '',
+            summary: '',
+            chapters: []
+        };
+    }
+
+    async parseChapter(chapterUrl) {
+        const res = await fetch(chapterUrl);
+        const html = await res.text();
+        return '';
+    }
+}
